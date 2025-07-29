@@ -332,6 +332,7 @@
         flex: 1;
         position: relative;
         flex-direction: column;
+        overflow: hidden;
       }
 
       /* Video Conference Area */
@@ -342,6 +343,7 @@
         padding: 10px;
         position: relative;
         overflow: hidden;
+        transition: margin 0.3s ease;
       }
 
       .video-container {
@@ -501,26 +503,35 @@
         white-space: nowrap;
       }
 
-      /* Chat Panel */
-      .chat-panel {
+      /* Sidebar Panels */
+      .sidebar-container {
         position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+        top: 60px;
+        bottom: 70px;
+        width: 320px;
         background-color: white;
-        transform: translateX(100%);
-        transition: var(--transition);
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+        z-index: 150;
+        transition: transform 0.3s ease;
         display: flex;
         flex-direction: column;
-        z-index: 200;
       }
 
-      .chat-panel.open {
+      .sidebar-container.right {
+        right: 0;
+        transform: translateX(100%);
+      }
+
+      .sidebar-container.left {
+        left: 0;
+        transform: translateX(-100%);
+      }
+
+      .sidebar-container.open {
         transform: translateX(0);
       }
 
-      .chat-header {
+      .sidebar-header {
         padding: 15px;
         border-bottom: 1px solid #e9ecef;
         font-weight: 600;
@@ -531,7 +542,7 @@
         color: white;
       }
 
-      .chat-close {
+      .sidebar-close {
         background: none;
         border: none;
         color: white;
@@ -539,12 +550,20 @@
         font-size: 1.2rem;
       }
 
-      .chat-messages {
+      .sidebar-content {
         flex: 1;
         overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      /* Chat Panel */
+      .chat-panel {
+        right: 0;
+      }
+
+      .chat-messages {
         padding: 15px;
         background-color: #f8f9fa;
-        -webkit-overflow-scrolling: touch;
       }
 
       .message {
@@ -627,32 +646,7 @@
 
       /* Participants Panel */
       .participants-panel {
-        position: fixed;
-        top: 0;
         left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: white;
-        transform: translateX(100%);
-        transition: var(--transition);
-        display: flex;
-        flex-direction: column;
-        z-index: 200;
-      }
-
-      .participants-panel.open {
-        transform: translateX(0);
-      }
-
-      .participants-header {
-        padding: 15px;
-        border-bottom: 1px solid #e9ecef;
-        font-weight: 600;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: var(--primary);
-        color: white;
       }
 
       .participants-count {
@@ -661,19 +655,8 @@
         font-weight: normal;
       }
 
-      .participants-close {
-        background: none;
-        border: none;
-        color: white;
-        cursor: pointer;
-        font-size: 1.2rem;
-      }
-
       .participants-list {
-        flex: 1;
-        overflow-y: auto;
         padding: 10px;
-        -webkit-overflow-scrolling: touch;
       }
 
       .participant-item {
@@ -745,6 +728,50 @@
         color: var(--warning);
         margin-left: auto;
         font-size: 0.9rem;
+      }
+
+      /* Map Panel */
+      .map-panel {
+        right: 0;
+      }
+
+      .map-container {
+        flex: 1;
+        width: 100%;
+        position: relative;
+      }
+
+      #map {
+        width: 100%;
+        height: 100%;
+      }
+
+      .map-controls {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 10px;
+        z-index: 1000;
+      }
+
+      .map-control-button {
+        background-color: white;
+        border: none;
+        border-radius: 50%;
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+      }
+
+      .map-control-button i {
+        color: var(--primary);
+        font-size: 1.1rem;
       }
 
       /* Reactions */
@@ -1239,6 +1266,66 @@
         transform: translateX(26px);
       }
 
+      /* Invite Success Modal */
+      .invite-success-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 400;
+        opacity: 0;
+        pointer-events: none;
+        transition: var(--transition);
+      }
+
+      .invite-success-modal.show {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .invite-success-container {
+        background-color: white;
+        border-radius: var(--border-radius);
+        width: 95%;
+        max-width: 350px;
+        padding: 25px;
+        box-shadow: var(--box-shadow);
+        text-align: center;
+      }
+
+      .invite-success-icon {
+        font-size: 3rem;
+        color: var(--success);
+        margin-bottom: 15px;
+      }
+
+      .invite-success-title {
+        font-weight: 600;
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+      }
+
+      .invite-success-message {
+        color: var(--gray);
+        margin-bottom: 20px;
+      }
+
+      .invite-success-button {
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        border-radius: var(--border-radius);
+        padding: 10px 20px;
+        font-weight: 500;
+        cursor: pointer;
+        width: 100%;
+      }
+
       /* Responsive adjustments */
       @media (max-width: 768px) {
         .video-container {
@@ -1247,6 +1334,10 @@
 
         .bottom-sheet-items {
           grid-template-columns: repeat(2, 1fr);
+        }
+
+        .sidebar-container {
+          width: 280px;
         }
       }
 
@@ -1270,11 +1361,46 @@
         }
 
         .video-container {
-          grid-template-columns: 1fr;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          padding: 5px;
+          overflow-y: auto;
+          height: calc(
+            100vh - 140px
+          ); /* Adjust based on your header/footer heights */
         }
 
         .video-tile {
-          aspect-ratio: 4/3;
+          width: 100%;
+          min-height: 180px; /* Minimum height for each video tile */
+          aspect-ratio: 16/9;
+          flex-shrink: 0;
+        }
+
+        /* Fullscreen mode adjustments */
+        .video-tile.fullscreen {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          z-index: 1000;
+          background-color: black;
+        }
+
+        .video-tile.fullscreen .video-controls {
+          position: fixed;
+          bottom: 80px;
+          right: 15px;
+          z-index: 1001;
+        }
+
+        .video-tile.fullscreen .video-info {
+          position: fixed;
+          bottom: 20px;
+          left: 15px;
+          z-index: 1001;
         }
 
         .bottom-sheet-items {
@@ -1288,6 +1414,18 @@
 
         .bottom-sheet-item span {
           font-size: 0.7rem;
+        }
+
+        .sidebar-container {
+          width: 100%;
+          top: 60px;
+          bottom: 70px;
+        }
+      }
+
+      @media (max-width: 360px) {
+        .video-tile {
+          min-height: 150px;
         }
       }
 
@@ -1307,6 +1445,13 @@
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
+    />
+    <!-- Leaflet CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
     />
   </head>
   <body>
@@ -1399,7 +1544,7 @@
       </header>
 
       <div class="main-container">
-        <div class="conference-area">
+        <div class="conference-area" id="conferenceArea">
           <div class="recording-indicator" id="recordingIndicator">
             Recording
           </div>
@@ -1507,6 +1652,12 @@
               </button>
             </div>
             <div class="control-container">
+              <button class="control-button" id="mapButton">
+                <i class="fas fa-map-marker-alt"></i>
+                <span class="control-button-label">Map</span>
+              </button>
+            </div>
+            <div class="control-container">
               <button class="control-button danger" id="endCallButton">
                 <i class="fas fa-phone"></i>
                 <span class="control-button-label">Leave</span>
@@ -1516,151 +1667,178 @@
         </div>
 
         <!-- Chat Panel -->
-        <div class="chat-panel" id="chatPanel">
-          <div class="chat-header">
+        <div class="sidebar-container right" id="chatPanel">
+          <div class="sidebar-header">
             <span>Meeting Chat</span>
-            <button class="chat-close" id="chatClose">
+            <button class="sidebar-close" id="chatClose">
               <i class="fas fa-times"></i>
             </button>
           </div>
-          <div class="chat-messages" id="chatMessages">
-            <div class="message">
-              <div class="message-info">
-                <div class="message-sender">Alex Johnson</div>
-                <div class="message-time">2:30 PM</div>
+          <div class="sidebar-content">
+            <div class="chat-messages" id="chatMessages">
+              <div class="message">
+                <div class="message-info">
+                  <div class="message-sender">Alex Johnson</div>
+                  <div class="message-time">2:30 PM</div>
+                </div>
+                <div class="message-content">
+                  Hello everyone! Can you hear me okay?
+                </div>
               </div>
-              <div class="message-content">
-                Hello everyone! Can you hear me okay?
+              <div class="message">
+                <div class="message-info">
+                  <div class="message-sender">Maria Garcia</div>
+                  <div class="message-time">2:31 PM</div>
+                </div>
+                <div class="message-content">Yes, loud and clear!</div>
+              </div>
+              <div class="message own">
+                <div class="message-info">
+                  <div class="message-sender">You</div>
+                  <div class="message-time">2:32 PM</div>
+                </div>
+                <div class="message-content">
+                  Welcome everyone to our weekly meeting!
+                </div>
+              </div>
+              <div class="message-system">Maria Garcia joined the meeting</div>
+              <div class="message">
+                <div class="message-info">
+                  <div class="message-sender">Sam Wilson</div>
+                  <div class="message-time">2:33 PM</div>
+                </div>
+                <div class="message-content">
+                  Sorry I'm late, had another meeting run over.
+                </div>
+              </div>
+              <div class="message">
+                <div class="message-info">
+                  <div class="message-sender">Taylor Smith</div>
+                  <div class="message-time">2:34 PM</div>
+                </div>
+                <div class="message-content">
+                  No problem, we were just getting started.
+                </div>
               </div>
             </div>
-            <div class="message">
-              <div class="message-info">
-                <div class="message-sender">Maria Garcia</div>
-                <div class="message-time">2:31 PM</div>
+            <div class="chat-input-container">
+              <div class="chat-input-wrapper">
+                <input
+                  type="text"
+                  class="chat-input"
+                  id="chatInput"
+                  placeholder="Type a message..."
+                />
+                <button class="chat-send" id="chatSend">
+                  <i class="fas fa-paper-plane"></i>
+                </button>
               </div>
-              <div class="message-content">Yes, loud and clear!</div>
-            </div>
-            <div class="message own">
-              <div class="message-info">
-                <div class="message-sender">You</div>
-                <div class="message-time">2:32 PM</div>
-              </div>
-              <div class="message-content">
-                Welcome everyone to our weekly meeting!
-              </div>
-            </div>
-            <div class="message-system">Maria Garcia joined the meeting</div>
-            <div class="message">
-              <div class="message-info">
-                <div class="message-sender">Sam Wilson</div>
-                <div class="message-time">2:33 PM</div>
-              </div>
-              <div class="message-content">
-                Sorry I'm late, had another meeting run over.
-              </div>
-            </div>
-            <div class="message">
-              <div class="message-info">
-                <div class="message-sender">Taylor Smith</div>
-                <div class="message-time">2:34 PM</div>
-              </div>
-              <div class="message-content">
-                No problem, we were just getting started.
-              </div>
-            </div>
-          </div>
-          <div class="chat-input-container">
-            <div class="chat-input-wrapper">
-              <input
-                type="text"
-                class="chat-input"
-                id="chatInput"
-                placeholder="Type a message..."
-              />
-              <button class="chat-send" id="chatSend">
-                <i class="fas fa-paper-plane"></i>
-              </button>
             </div>
           </div>
         </div>
 
         <!-- Participants Panel -->
-        <div class="participants-panel" id="participantsPanel">
-          <div class="participants-header">
+        <div class="sidebar-container left" id="participantsPanel">
+          <div class="sidebar-header">
             <span
               >Participants <span class="participants-count">(5)</span></span
             >
-            <button class="participants-close" id="participantsClose">
+            <button class="sidebar-close" id="participantsClose">
               <i class="fas fa-times"></i>
             </button>
           </div>
-          <div class="participants-list" id="participantsList">
-            <div class="participant-item">
-              <div class="participant-avatar">YG</div>
-              <div class="participant-info">
-                <div class="participant-name">
-                  You <span class="participant-you">(Host)</span>
+          <div class="sidebar-content">
+            <div class="participants-list" id="participantsList">
+              <div class="participant-item">
+                <div class="participant-avatar">YG</div>
+                <div class="participant-info">
+                  <div class="participant-name">
+                    You <span class="participant-you">(Host)</span>
+                  </div>
+                  <div class="participant-status">Connected</div>
                 </div>
-                <div class="participant-status">Connected</div>
+                <div class="participant-actions">
+                  <button class="participant-action">
+                    <i class="fas fa-ellipsis-v"></i>
+                  </button>
+                </div>
               </div>
-              <div class="participant-actions">
-                <button class="participant-action">
-                  <i class="fas fa-ellipsis-v"></i>
-                </button>
+              <div class="participant-item">
+                <div class="participant-avatar">AJ</div>
+                <div class="participant-info">
+                  <div class="participant-name">Alex Johnson</div>
+                  <div class="participant-status">Speaking</div>
+                </div>
+                <div class="participant-actions">
+                  <button class="participant-action">
+                    <i class="fas fa-microphone-slash"></i>
+                  </button>
+                  <button class="participant-action">
+                    <i class="fas fa-video-slash"></i>
+                  </button>
+                </div>
+                <i class="fas fa-hand-paper raised-hand" id="alexHand"></i>
+              </div>
+              <div class="participant-item">
+                <div class="participant-avatar">MG</div>
+                <div class="participant-info">
+                  <div class="participant-name">Maria Garcia</div>
+                  <div class="participant-status">Connected</div>
+                </div>
+                <div class="participant-actions">
+                  <button class="participant-action">
+                    <i class="fas fa-ellipsis-v"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="participant-item">
+                <div class="participant-avatar">SW</div>
+                <div class="participant-info">
+                  <div class="participant-name">Sam Wilson</div>
+                  <div class="participant-status">Muted</div>
+                </div>
+                <div class="participant-actions">
+                  <button class="participant-action">
+                    <i class="fas fa-microphone"></i>
+                  </button>
+                  <button class="participant-action">
+                    <i class="fas fa-ellipsis-v"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="participant-item">
+                <div class="participant-avatar">TS</div>
+                <div class="participant-info">
+                  <div class="participant-name">Taylor Smith</div>
+                  <div class="participant-status">Presenting</div>
+                </div>
+                <div class="participant-actions">
+                  <button class="participant-action">
+                    <i class="fas fa-ellipsis-v"></i>
+                  </button>
+                </div>
               </div>
             </div>
-            <div class="participant-item">
-              <div class="participant-avatar">AJ</div>
-              <div class="participant-info">
-                <div class="participant-name">Alex Johnson</div>
-                <div class="participant-status">Speaking</div>
-              </div>
-              <div class="participant-actions">
-                <button class="participant-action">
-                  <i class="fas fa-microphone-slash"></i>
+          </div>
+        </div>
+
+        <!-- Map Panel -->
+        <div class="sidebar-container right" id="mapPanel">
+          <div class="sidebar-header">
+            <span>Meeting Location</span>
+            <button class="sidebar-close" id="mapClose">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <div class="sidebar-content">
+            <div class="map-container">
+              <div id="map"></div>
+              <div class="map-controls">
+                <button class="map-control-button" id="locateMeButton">
+                  <i class="fas fa-location-arrow"></i>
                 </button>
-                <button class="participant-action">
-                  <i class="fas fa-video-slash"></i>
-                </button>
-              </div>
-              <i class="fas fa-hand-paper raised-hand" id="alexHand"></i>
-            </div>
-            <div class="participant-item">
-              <div class="participant-avatar">MG</div>
-              <div class="participant-info">
-                <div class="participant-name">Maria Garcia</div>
-                <div class="participant-status">Connected</div>
-              </div>
-              <div class="participant-actions">
-                <button class="participant-action">
-                  <i class="fas fa-ellipsis-v"></i>
-                </button>
-              </div>
-            </div>
-            <div class="participant-item">
-              <div class="participant-avatar">SW</div>
-              <div class="participant-info">
-                <div class="participant-name">Sam Wilson</div>
-                <div class="participant-status">Muted</div>
-              </div>
-              <div class="participant-actions">
-                <button class="participant-action">
-                  <i class="fas fa-microphone"></i>
-                </button>
-                <button class="participant-action">
-                  <i class="fas fa-ellipsis-v"></i>
-                </button>
-              </div>
-            </div>
-            <div class="participant-item">
-              <div class="participant-avatar">TS</div>
-              <div class="participant-info">
-                <div class="participant-name">Taylor Smith</div>
-                <div class="participant-status">Presenting</div>
-              </div>
-              <div class="participant-actions">
-                <button class="participant-action">
-                  <i class="fas fa-ellipsis-v"></i>
+                <button class="map-control-button" id="shareLocationButton">
+                  <i class="fas fa-share"></i>
                 </button>
               </div>
             </div>
@@ -1796,6 +1974,22 @@
           </div>
         </div>
 
+        <!-- Invite Success Modal -->
+        <div class="invite-success-modal" id="inviteSuccessModal">
+          <div class="invite-success-container">
+            <div class="invite-success-icon">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="invite-success-title">Invite Sent Successfully!</div>
+            <div class="invite-success-message">
+              Your meeting invitation has been sent to the recipients.
+            </div>
+            <button class="invite-success-button" id="inviteSuccessButton">
+              OK
+            </button>
+          </div>
+        </div>
+
         <!-- Settings Panel -->
         <div class="bottom-sheet" id="settingsPanel">
           <div class="bottom-sheet-header">
@@ -1868,6 +2062,13 @@
         <div class="overlay" id="overlay"></div>
       </div>
     </div>
+
+    <!-- Leaflet JS -->
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
 
     <script>
       // Function to generate a random meeting ID
@@ -2226,6 +2427,9 @@
                 "",
                 false
               );
+            } else if (message.type === "location") {
+              // Handle received location
+              updateParticipantLocation(message.userId, message.coords);
             }
           };
         }
@@ -2245,6 +2449,7 @@
         const micButton = document.getElementById("micButton");
         const moreButton = document.getElementById("moreButton");
         const chatButton = document.getElementById("chatButton");
+        const mapButton = document.getElementById("mapButton");
         const endCallButton = document.getElementById("endCallButton");
         const meetingTimer = document.getElementById("meetingTimer");
         const userMenuButton = document.getElementById("userMenuButton");
@@ -2276,8 +2481,201 @@
         const copySocialMessage = document.getElementById("copySocialMessage");
         const cancelInvite = document.getElementById("cancelInvite");
         const sendInvite = document.getElementById("sendInvite");
+        const inviteSuccessModal =
+          document.getElementById("inviteSuccessModal");
+        const inviteSuccessButton = document.getElementById(
+          "inviteSuccessButton"
+        );
         const settingsPanel = document.getElementById("settingsPanel");
         const settingsClose = document.getElementById("settingsClose");
+        const mapPanel = document.getElementById("mapPanel");
+        const mapClose = document.getElementById("mapClose");
+        const locateMeButton = document.getElementById("locateMeButton");
+        const shareLocationButton = document.getElementById(
+          "shareLocationButton"
+        );
+        const conferenceArea = document.getElementById("conferenceArea");
+
+        // Map variables
+        let map;
+        let userMarker;
+        let participantMarkers = {};
+        let userLocation = null;
+
+        // Initialize the map
+        function initMap() {
+          // Default to a world view
+          map = L.map("map").setView([0, 0], 2);
+
+          // Add OpenStreetMap tiles
+          L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution:
+              '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+          }).addTo(map);
+
+          // Add a scale control
+          L.control.scale().addTo(map);
+
+          // Add demo participant markers
+          addDemoParticipants();
+        }
+
+        // Add demo participants to the map
+        function addDemoParticipants() {
+          // Demo locations for participants
+          const demoLocations = {
+            user2: { lat: 40.7128, lng: -74.006, name: "Alex Johnson" }, // New York
+            user3: { lat: 34.0522, lng: -118.2437, name: "Maria Garcia" }, // Los Angeles
+            user4: { lat: 41.8781, lng: -87.6298, name: "Sam Wilson" }, // Chicago
+            user5: { lat: 29.7604, lng: -95.3698, name: "Taylor Smith" }, // Houston
+          };
+
+          // Create markers for each participant
+          Object.keys(demoLocations).forEach((userId) => {
+            const loc = demoLocations[userId];
+            const marker = L.marker([loc.lat, loc.lng]).addTo(map);
+            marker.bindPopup(`<b>${loc.name}</b><br>Joined from ${loc.name}`);
+            participantMarkers[userId] = marker;
+          });
+        }
+
+        // Update participant location on the map
+        function updateParticipantLocation(userId, coords) {
+          if (participantMarkers[userId]) {
+            // Move existing marker
+            participantMarkers[userId].setLatLng([
+              coords.latitude,
+              coords.longitude,
+            ]);
+          } else {
+            // Create new marker
+            const participant = participants.find((p) => p.id === userId);
+            if (participant) {
+              const marker = L.marker([
+                coords.latitude,
+                coords.longitude,
+              ]).addTo(map);
+              marker.bindPopup(`<b>${participant.name}</b>`);
+              participantMarkers[userId] = marker;
+            }
+          }
+
+          // If we have user location, fit bounds to show all markers
+          if (userLocation) {
+            const bounds = L.latLngBounds(
+              Object.values(participantMarkers).map((m) => m.getLatLng())
+            );
+            bounds.extend([userLocation.latitude, userLocation.longitude]);
+            map.fitBounds(bounds);
+          }
+        }
+
+        // Locate the current user
+        function locateUser() {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+              (position) => {
+                userLocation = position.coords;
+
+                // Remove existing user marker if it exists
+                if (userMarker) {
+                  map.removeLayer(userMarker);
+                }
+
+                // Add new marker for user
+                userMarker = L.marker(
+                  [userLocation.latitude, userLocation.longitude],
+                  {
+                    icon: L.divIcon({
+                      className: "user-location-marker",
+                      html: '<i class="fas fa-user" style="color: #4361ee; font-size: 24px;"></i>',
+                      iconSize: [24, 24],
+                    }),
+                  }
+                ).addTo(map);
+
+                userMarker.bindPopup("<b>Your Location</b>").openPopup();
+
+                // Center map on user location
+                map.setView(
+                  [userLocation.latitude, userLocation.longitude],
+                  12
+                );
+
+                showNotification("Your location has been added to the map");
+              },
+              (error) => {
+                console.error("Error getting location:", error);
+                showNotification("Could not get your location");
+              },
+              { enableHighAccuracy: true }
+            );
+          } else {
+            showNotification("Geolocation is not supported by your browser");
+          }
+        }
+
+        // Share the user's location with other participants
+        function shareLocation() {
+          if (!userLocation) {
+            showNotification("Please locate yourself first");
+            return;
+          }
+
+          if (dataChannel && dataChannel.readyState === "open") {
+            dataChannel.send(
+              JSON.stringify({
+                type: "location",
+                userId: "user1", // Current user ID
+                coords: userLocation,
+              })
+            );
+
+            showNotification("Your location has been shared with participants");
+          } else {
+            showNotification("Could not share location - connection issue");
+          }
+        }
+
+        // Open map panel
+        function openMap() {
+          mapPanel.classList.add("open");
+          conferenceArea.style.marginRight = "320px";
+          overlay.classList.add("show");
+
+          // Initialize map if not already done
+          if (!map) {
+            initMap();
+          }
+        }
+
+        // Close map panel
+        function closeMap() {
+          mapPanel.classList.remove("open");
+          conferenceArea.style.marginRight = "0";
+          overlay.classList.remove("show");
+        }
+
+        // Map button click handler
+        mapButton.addEventListener("click", function () {
+          if (mapPanel.classList.contains("open")) {
+            closeMap();
+          } else {
+            // Close other panels first
+            closeChat();
+            closeParticipants();
+            openMap();
+          }
+        });
+
+        // Map close button
+        mapClose.addEventListener("click", closeMap);
+
+        // Locate me button
+        locateMeButton.addEventListener("click", locateUser);
+
+        // Share location button
+        shareLocationButton.addEventListener("click", shareLocation);
 
         // State variables
         let isCameraOn = false;
@@ -2287,6 +2685,7 @@
         let callActive = true;
         let participantsVisible = false;
         let chatOpen = false;
+        let mapOpen = false;
         let handRaised = false;
         let reactionsVisible = false;
         let bottomSheetOpen = false;
@@ -2494,20 +2893,25 @@
         function openChat() {
           chatOpen = true;
           chatPanel.classList.add("open");
+          conferenceArea.style.marginRight = "320px";
           overlay.classList.add("show");
         }
 
         function closeChat() {
           chatOpen = false;
           chatPanel.classList.remove("open");
+          conferenceArea.style.marginRight = "0";
           overlay.classList.remove("show");
         }
 
         chatClose.addEventListener("click", closeChat);
         chatButton.addEventListener("click", function () {
-          if (chatOpen) {
+          if (chatPanel.classList.contains("open")) {
             closeChat();
           } else {
+            // Close other panels first
+            closeMap();
+            closeParticipants();
             openChat();
           }
         });
@@ -2569,20 +2973,25 @@
         function openParticipants() {
           participantsVisible = true;
           participantsPanel.classList.add("open");
+          conferenceArea.style.marginLeft = "320px";
           overlay.classList.add("show");
         }
 
         function closeParticipants() {
           participantsVisible = false;
           participantsPanel.classList.remove("open");
+          conferenceArea.style.marginLeft = "0";
           overlay.classList.remove("show");
         }
 
         participantsClose.addEventListener("click", closeParticipants);
         participantsButton.addEventListener("click", function () {
-          if (participantsVisible) {
+          if (participantsPanel.classList.contains("open")) {
             closeParticipants();
           } else {
+            // Close other panels first
+            closeChat();
+            closeMap();
             openParticipants();
           }
         });
@@ -2840,6 +3249,14 @@
           overlay.classList.remove("show");
         }
 
+        function showInviteSuccess() {
+          inviteSuccessModal.classList.add("show");
+        }
+
+        function closeInviteSuccess() {
+          inviteSuccessModal.classList.remove("show");
+        }
+
         // Tab switching in invite modal
         inviteTabs.forEach((tab) => {
           tab.addEventListener("click", function () {
@@ -2892,6 +3309,33 @@
           window.location.href = url;
         });
 
+        // Function to send email invitation
+        async function sendEmailInvitation(email, subject, message) {
+          try {
+            // In a real application, you would call your backend API here
+            // For demo purposes, we'll simulate the API call
+            console.log(`Sending email to: ${email}`);
+            console.log(`Subject: ${subject}`);
+            console.log(`Message: ${message}`);
+
+            // Simulate API call delay
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+
+            // For testing with yadeleweneyew12@gmail.com, we'll show a success message
+            if (email.includes("yadeleweneyew12@gmail.com")) {
+              return {
+                success: true,
+                message: "Email sent successfully to yadeleweneyew12@gmail.com",
+              };
+            }
+
+            return { success: true, message: "Invitations sent successfully" };
+          } catch (error) {
+            console.error("Error sending email:", error);
+            return { success: false, message: "Failed to send invitations" };
+          }
+        }
+
         // Send invite functionality
         sendInvite.addEventListener("click", async function () {
           const emailText = document.getElementById("emailInput").value.trim();
@@ -2922,9 +3366,40 @@
           }
 
           // Show sending notification
-          showNotification(`Invites sent to ${emails.length} recipients`);
-          closeInviteModal();
+          showNotification("Sending invites...");
+
+          // Get meeting details
+          const meetingLink =
+            document.getElementById("meetingLink").textContent;
+          const subject = "Invitation to ConnectHub Meeting";
+          const emailMessage =
+            message ||
+            `You've been invited to join a ConnectHub meeting. Click the link to join: ${meetingLink}`;
+
+          // Send emails
+          try {
+            for (const email of emails) {
+              const result = await sendEmailInvitation(
+                email,
+                subject,
+                emailMessage
+              );
+              if (!result.success) {
+                throw new Error(result.message);
+              }
+            }
+
+            // Show success modal
+            closeInviteModal();
+            showInviteSuccess();
+          } catch (error) {
+            console.error("Error sending invites:", error);
+            showNotification("Failed to send some invites. Please try again.");
+          }
         });
+
+        // Invite success button
+        inviteSuccessButton.addEventListener("click", closeInviteSuccess);
 
         // Cancel invite
         cancelInvite.addEventListener("click", closeInviteModal);
@@ -3013,6 +3488,42 @@
             .toString()
             .padStart(2, "0")}`;
         }
+
+        // Fullscreen functionality for video tiles
+        document.querySelectorAll(".video-control").forEach((control) => {
+          control.addEventListener("click", function (e) {
+            e.stopPropagation();
+            const tile = this.closest(".video-tile");
+
+            if (tile.classList.contains("fullscreen")) {
+              tile.classList.remove("fullscreen");
+              document.body.style.overflow = "auto";
+            } else {
+              // Exit any other fullscreen tiles first
+              document
+                .querySelectorAll(".video-tile.fullscreen")
+                .forEach((t) => {
+                  t.classList.remove("fullscreen");
+                });
+
+              tile.classList.add("fullscreen");
+              document.body.style.overflow = "hidden";
+            }
+          });
+        });
+
+        // Close fullscreen when clicking outside
+        document.addEventListener("click", function (e) {
+          if (
+            !e.target.closest(".video-tile.fullscreen") &&
+            document.querySelector(".video-tile.fullscreen")
+          ) {
+            document
+              .querySelector(".video-tile.fullscreen")
+              .classList.remove("fullscreen");
+            document.body.style.overflow = "auto";
+          }
+        });
 
         // Simulate incoming message after 8 seconds
         setTimeout(() => {
